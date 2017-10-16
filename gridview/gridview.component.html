@@ -1,0 +1,39 @@
+<ng-container *ngIf="gridviewService.dataSource && gridviewService.dataSource.length > 0">
+  <div class="row align-items-end" [ngClass]="{'': gridviewService.options.searchAlign === 'left',
+  'justify-content-center': gridviewService.options.searchAlign === 'center',
+  'justify-content-around': gridviewService.options.searchAlign === 'right'}">
+    <div class="col" *ngIf="gridviewService.options.searchEnabled && gridviewService.options.searchAlign === 'left'">
+      <input class="search" type="text" name="search" (keyup)="search($event.target.value)" placeholder="搜尋..." aria-label="搜尋...">
+    </div>
+    <div [ngClass]="{'col-md-auto': gridviewService.options.searchAlign === 'left',
+  'col': gridviewService.options.searchAlign === 'right'}" *ngIf="gridviewService.options.searchAlign !== 'center'">
+      <ng-content select="[gridview-header]"></ng-content>
+    </div>
+    <div class="col-md-auto" *ngIf="gridviewService.options.searchEnabled &&
+    (gridviewService.options.searchAlign === 'center' || gridviewService.options.searchAlign === 'right')">
+      <input class="search" type="text" name="search" (keyup)="search($event.target.value)" placeholder="搜尋..." aria-label="搜尋...">
+    </div>
+  </div>
+
+  <div class="row" [hidden]="!items || items.length === 0">
+    <ng-content select="[gridview-body]"></ng-content>
+  </div>
+  <div class="row" [hidden]="!items || items.length === 0" [ngClass]="{'': gridviewService.options.pageAlign === 'left',
+  'justify-content-center': gridviewService.options.pageAlign === 'center',
+  'justify-content-end': gridviewService.options.pageAlign === 'right'}" *ngIf="gridviewService.options.pagingEnabled">
+    <app-pagination></app-pagination>
+  </div>
+
+  <ng-container *ngIf="gridviewService.searchedItems && gridviewService.searchedItems.length === 0">
+    <br/>
+    <div class="alert alert-danger">
+      <strong>提示!</strong> 沒有符合比對的資料！
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="gridviewService.dataSource && gridviewService.dataSource.length === 0">
+  <br/>
+  <div class="alert alert-danger">
+    <strong>提示!</strong> 無資料!！
+  </div>
+</ng-container>
