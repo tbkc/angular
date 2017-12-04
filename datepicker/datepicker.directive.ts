@@ -1,5 +1,6 @@
 import { Directive, ElementRef, OnInit, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Directive({
   selector: '[appDatepicker]',
@@ -9,13 +10,19 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
       useExisting: DatepickerDirective,
       multi: true
     }
-  ]
+  ],
+  exportAs: 'appDatepicker'
 })
 export class DatepickerDirective implements OnInit, ControlValueAccessor {
   @Input() option: datepickerOption;
-  onChangeDate: (date: string) => {};
+  private changeDate = new BehaviorSubject<any>(null);
+  changeDate$ = this.changeDate.asObservable();
+
+  private onChangeDate: (date: string) => {};
+
   constructor(private el: ElementRef) { }
   ngOnInit() {
+
     if (this.option) {
       $(this.el.nativeElement).datepicker(this.option);
     } else {
@@ -26,25 +33,31 @@ export class DatepickerDirective implements OnInit, ControlValueAccessor {
       if (this.onChangeDate) {
         this.onChangeDate($(this.el.nativeElement).datepicker('getUTCDate'));
       }
+      this.changeDate.next(e);
     });
   }
 
-  writeValue(obj: string): void {
+
+
+  private writeValue(obj: string): void {
     if (obj) {
-      const _data = obj.split('T')[0];
-      $(this.el.nativeElement).datepicker('setDate', _data);
+      try {
+        const _data = obj.split('T')[0];
+        $(this.el.nativeElement).datepicker('setDate', _data);
+      } catch (e) {
+        $(this.el.nativeElement).datepicker('setDate', obj);
+      }
     }
   }
 
-  registerOnChange(fn: any): void {
+  private registerOnChange(fn: any): void {
     this.onChangeDate = fn;
   }
 
-
-
-  registerOnTouched(fn: any): void {
+  private registerOnTouched(fn: any): void {
   }
-  setDisabledState?(isDisabled: boolean): void {
+
+  private setDisabledState?(isDisabled: boolean): void {
   }
 
 }
