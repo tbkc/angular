@@ -45,12 +45,29 @@ npm i @tbkc/datepicker
 如要原函式使用方法
 
 .html
-<input type="text" appDatepicker #d1 />
+
+    <input type="text" appDatepicker #d1 />
 
 .ts
-ViewChild('d1') d1:any;
 
-$(this.d1.nativeElement).datepicker(方法)
+    ViewChild('d1') d1:any;
+
+    $(this.d1.nativeElement).datepicker(方法)
 
 方法請參考原作者文件....以後有空再包成angular2~~
 
+# 只先做了一個方法
+
+.html
+
+    <input type="text" appDatepicker #d1="appDatepicker" />
+
+
+.ts
+
+    ViewChild('d1') d1:DatepickerDirective;
+    ngOnInit() {
+       this.d1.changeDate$.subscribe(data => {
+       //當日期改變時做什麼~~
+       });
+    }
