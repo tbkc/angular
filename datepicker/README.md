@@ -50,7 +50,7 @@ npm i @tbkc/datepicker
 .ts
 ViewChild('d1') d1:any;
 
-$(d1).datepicker(方法)
+$(this.d1.nativeElement).datepicker(方法)
 
 方法請參考原作者文件....以後有空再包成angular2~~
 
