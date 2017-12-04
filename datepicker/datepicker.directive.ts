@@ -24,14 +24,16 @@ export class DatepickerDirective implements OnInit, ControlValueAccessor {
 
     $(this.el.nativeElement).datepicker().on('changeDate', (e: any) => {
       if (this.onChangeDate) {
-        this.onChangeDate(e.delegateTarget.value);
+        this.onChangeDate($(this.el.nativeElement).datepicker('getUTCDate'));
       }
     });
   }
 
-
   writeValue(obj: string): void {
-    this.el.nativeElement.value = obj;
+    if (obj) {
+      const _data = obj.split('T')[0];
+      $(this.el.nativeElement).datepicker('setDate', _data);
+    }
   }
 
   registerOnChange(fn: any): void {

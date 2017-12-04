@@ -1700,7 +1700,7 @@
 
   var defaults = $.fn.datepicker.defaults = {
     assumeNearbyYear: false,
-    autoclose: false,
+    autoclose: true,
     beforeShowDay: $.noop,
     beforeShowMonth: $.noop,
     beforeShowYear: $.noop,
