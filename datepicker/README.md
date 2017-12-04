@@ -4,6 +4,14 @@
 作者網址
 https://github.com/uxsolutions/bootstrap-datepicker
 
+作者文件
+https://bootstrap-datepicker.readthedocs.io/en/stable/
+
+# 需求
+
+Jquery
+bootstrap3 or 4
+
 # 安裝
 
 npm i @tbkc/datepicker
@@ -32,6 +40,8 @@ npm i @tbkc/datepicker
 
 <input type="text" appDatepicker />
 
+在.ts檔中providers: [DatepickerService]
+
 # 設定檔
 
 預設為民國年中文，如要改其他格式或設定
@@ -42,7 +52,7 @@ npm i @tbkc/datepicker
 
 # 方法
 
-如要原函式使用方法
+原生函式使用方法
 
 .html
 
@@ -56,18 +66,40 @@ npm i @tbkc/datepicker
 
 方法請參考原作者文件....以後有空再包成angular2~~
 
-# 只先做了一個方法
+# angular2只先做了一個方法 - 日期改變事件
 
 .html
 
-    <input type="text" appDatepicker #d1="appDatepicker" />
+    <input type="text" appDatepicker />~~第一個
 
+    <input type="text" appDatepicker />~~第二個
 
 .ts
 
-    ViewChild('d1') d1:DatepickerDirective;
+    constructor(private datepickerService: DatepickerService) { }
+    
     ngOnInit() {
-       this.d1.changeDate$.subscribe(data => {
-       //當日期改變時做什麼~~
+       //第一個
+       this.datepickerService.element[0].changeDate$.subscribe(data => {
+         //當日期改變時做什麼~~
        });
+       
+       //第二個
+       this.datepickerService.element[1].changeDate$.subscribe(data => {
+         //當日期改變時做什麼~~
+       });
+       
     }
+
+或者你也可以這樣
+
+.html
+
+     <input type="text" (change)="changedate($event)" appDatepicker />
+
+.ts
+
+     changedate(event){
+       //當日期改變要做什麼
+     }
+
