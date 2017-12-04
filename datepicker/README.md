@@ -77,15 +77,9 @@ npm i @tbkc/datepicker
 
 .ts
 
-       constructor(private datepickerService: DatepickerService) { }
+    constructor(private datepickerService: DatepickerService) { }
     
-       ngOnInit() {
-         this.datepickerService.element[0].changeDate$.subscribe(data => {
-        });
-        this.datepickerService.element[1].changeDate$.subscribe(data => {
-         });
-      }
-
+     
 或者你也可以這樣
 
 .html
