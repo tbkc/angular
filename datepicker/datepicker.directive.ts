@@ -1,6 +1,8 @@
-import { Directive, ElementRef, OnInit, Input } from '@angular/core';
+import { Directive, ElementRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { DatepickerOption } from './index';
+import { DatepickerService } from './datepicker.service';
 
 @Directive({
   selector: '[appDatepicker]',
@@ -14,15 +16,18 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
   exportAs: 'appDatepicker'
 })
 export class DatepickerDirective implements OnInit, ControlValueAccessor {
-  @Input() option: datepickerOption;
+  @Input() option: DatepickerOption;
+  @Output() change = new EventEmitter();
+
   private changeDate = new BehaviorSubject<any>(null);
   changeDate$ = this.changeDate.asObservable();
 
   private onChangeDate: (date: string) => {};
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private datepickerService: DatepickerService) { }
   ngOnInit() {
-
+    this.el.nativeElement.datepickerFun = this;
+    this.datepickerService.element.push(this.el.nativeElement.datepickerFun);
     if (this.option) {
       $(this.el.nativeElement).datepicker(this.option);
     } else {
@@ -32,6 +37,7 @@ export class DatepickerDirective implements OnInit, ControlValueAccessor {
     $(this.el.nativeElement).datepicker().on('changeDate', (e: any) => {
       if (this.onChangeDate) {
         this.onChangeDate($(this.el.nativeElement).datepicker('getUTCDate'));
+        this.change.emit(e);
       }
       this.changeDate.next(e);
     });
@@ -39,7 +45,7 @@ export class DatepickerDirective implements OnInit, ControlValueAccessor {
 
 
 
-  private writeValue(obj: string): void {
+  writeValue(obj: string): void {
     if (obj) {
       try {
         const _data = obj.split('T')[0];
@@ -50,14 +56,14 @@ export class DatepickerDirective implements OnInit, ControlValueAccessor {
     }
   }
 
-  private registerOnChange(fn: any): void {
+  registerOnChange(fn: any): void {
     this.onChangeDate = fn;
   }
 
-  private registerOnTouched(fn: any): void {
+  registerOnTouched(fn: any): void {
   }
 
-  private setDisabledState?(isDisabled: boolean): void {
+  setDisabledState?(isDisabled: boolean): void {
   }
 
 }

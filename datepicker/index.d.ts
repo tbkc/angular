@@ -1,4 +1,4 @@
-interface datepickerOption {
+export interface DatepickerOption {
     autoclose?: boolean,
     assumeNearbyYear?: boolean | number,
     calendarWeeks?: boolean,
