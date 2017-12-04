@@ -13,11 +13,18 @@ npm i @tbkc/datepicker
 至.angular-cli.json加入相關styles與javascript
 
     "styles": [
-      "../node_modules/datepicker/css/bootstrap-datepicker.css"
+      "../node_modules/@tbkc/datepicker/css/bootstrap-datepicker.css"
      ],
     "scripts": [
-      "../node_modules/datepicker/js/bootstrap-datepicker.js"
+      "../node_modules/@tbkc/datepicker/js/bootstrap-datepicker.js"
     ],
+    
+到NgModule檔加入DatepickerDirective
+    
+    @NgModule({
+      declarations: [
+          DatepickerDirective
+      ]
 
 # 使用
 
