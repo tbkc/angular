@@ -73,7 +73,6 @@ npm i @tbkc/datepicker
 .html
 
     <input type="text" appDatepicker />
-
     <input type="text" appDatepicker />
 
 .ts
@@ -81,14 +80,14 @@ npm i @tbkc/datepicker
     constructor(private datepickerService: DatepickerService) { }
     
     ngOnInit() {
-       // 第一個
+       第一個
        this.datepickerService.element[0].changeDate$.subscribe(data => {
-         // 當日期改變時做什麼~~
+         當日期改變時做什麼~~
        });
        
-       // 第二個
+       第二個
        this.datepickerService.element[1].changeDate$.subscribe(data => {
-         // 當日期改變時做什麼~~
+         當日期改變時做什麼~~
        });
        
     }
