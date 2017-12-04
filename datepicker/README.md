@@ -28,7 +28,7 @@ npm i @tbkc/datepicker
     "scripts": [
       "../node_modules/@tbkc/datepicker/js/bootstrap-datepicker.js"
     ],
-    
+    
 到NgModule檔加入DatepickerDirective
 
     @NgModule({
@@ -40,7 +40,7 @@ npm i @tbkc/datepicker
 
 在要使用的Dom上加上appDatepicker標籤
 
-<input type="text" appDatepicker />
+    <input type="text" appDatepicker />
 
 在.ts檔中providers: [DatepickerService]
 
@@ -48,7 +48,7 @@ npm i @tbkc/datepicker
 
 預設為民國年中文，如要改其他格式或設定
 
-<input type="text" appDatepicker [option]="設定" />
+    <input type="text" appDatepicker [option]="設定" />
 
 設定格式請參考原作者文件
 
@@ -72,24 +72,32 @@ npm i @tbkc/datepicker
 
 .html
 
-    <input type="text" appDatepicker />
-    <input type="text" appDatepicker />
+    <input type="text" appDatepicker />
+    <input type="text" appDatepicker />
 
 .ts
 
     constructor(private datepickerService: DatepickerService) { }
-    
+    ngOnInit() {
+       this.datepickerService.element[0].changeDate$.subscribe(data => {
+       // 第一個dom
+       });
+       this.datepickerService.element[1].changeDate$.subscribe(data => {
+       // 第二個dom
+       });
+    }
+
      
 或者你也可以這樣
 
 .html
 
-     <input type="text" (change)="changedate($event)" appDatepicker />
+     <input type="text" (change)="changedate($event)" appDatepicker />
 
 .ts
 
      changedate(event){
-       //當日期改變要做什麼
-     }
+       //當日期改變要做什麼
+     }
 
 以後再慢慢加方法~~
