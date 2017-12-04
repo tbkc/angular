@@ -11,6 +11,7 @@ https://bootstrap-datepicker.readthedocs.io/en/stable/
 # 需求
 
 Jquery
+
 bootstrap3 or 4
 
 # 安裝
@@ -65,7 +66,7 @@ npm i @tbkc/datepicker
 
     $(this.d1.nativeElement).datepicker(方法)
 
-方法請參考原作者文件....以後有空再包成angular2~~
+方法請參考原作者文件....
 
 # angular2只先做了一個方法 - 日期改變事件
 
@@ -103,4 +104,5 @@ npm i @tbkc/datepicker
      changedate(event){
        //當日期改變要做什麼
      }
+
 
