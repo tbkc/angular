@@ -20,11 +20,11 @@ npm i @tbkc/datepicker
     ],
     
 到NgModule檔加入DatepickerDirective
-    
+
     @NgModule({
-      declarations: [
-          DatepickerDirective
-      ]
+          declarations: [
+              DatepickerDirective
+          ]
 
 # 使用
 
