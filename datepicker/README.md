@@ -29,20 +29,36 @@ npm i @tbkc/datepicker
       "../node_modules/@tbkc/datepicker/js/bootstrap-datepicker.js"
     ],
     
-到NgModule檔加入DatepickerDirective
+到NgModule檔加入DatepickerModule
 
     @NgModule({
-          declarations: [
-              DatepickerDirective
-          ]
+          imports: [
+               DatepickerModule
+          ],
 
 # 使用
 
 在要使用的Dom上加上appDatepicker標籤
 
     <input type="text" appDatepicker />
+    
+或者使用ngModel
 
-在.ts檔中providers: [DatepickerService]
+.html
+
+    <input type="text" [(ngModel)]="d1" appDatepicker />
+
+.ts
+
+    d1:any | string | Date
+    
+    ngOnInit() {
+      this.d1=2017-10-10;
+      // 字串或日期格式皆可，輸入輸出皆為西元年，但顯示時會是民國年
+    }
+    
+
+
 
 # 設定檔
 
@@ -78,7 +94,7 @@ npm i @tbkc/datepicker
 .ts
 
     constructor(private datepickerService: DatepickerService) { }
-    ngOnInit() {
+    ngAfterViewInit() {
        this.datepickerService.element[0].changeDate$.subscribe(data => {
        // 第一個dom
        });
@@ -99,5 +115,3 @@ npm i @tbkc/datepicker
      changedate(event){
        //當日期改變要做什麼
      }
-
-以後再慢慢加方法~~
