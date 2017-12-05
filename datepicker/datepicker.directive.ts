@@ -1,4 +1,4 @@
-import { Directive, ElementRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, ElementRef, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DatepickerOption } from './index';
@@ -15,16 +15,18 @@ import { DatepickerService } from './datepicker.service';
   ],
   exportAs: 'appDatepicker'
 })
-export class DatepickerDirective implements OnInit, ControlValueAccessor {
+export class DatepickerDirective implements OnInit, ControlValueAccessor, OnDestroy {
+
   @Input() option: DatepickerOption;
   @Output() change = new EventEmitter();
 
   private changeDate = new BehaviorSubject<any>(null);
   changeDate$ = this.changeDate.asObservable();
 
-  private onChangeDate: (date: string) => {};
+  onChangeDate: (date: string) => {};
 
   constructor(private el: ElementRef, private datepickerService: DatepickerService) { }
+
   ngOnInit() {
     this.el.nativeElement.datepickerFun = this;
     this.datepickerService.element.push(this.el.nativeElement.datepickerFun);
@@ -37,11 +39,26 @@ export class DatepickerDirective implements OnInit, ControlValueAccessor {
     $(this.el.nativeElement).datepicker().on('changeDate', (e: any) => {
       if (this.onChangeDate) {
         this.onChangeDate($(this.el.nativeElement).datepicker('getUTCDate'));
-        this.change.emit(e);
       }
+      this.change.emit(e);
       this.changeDate.next(e);
     });
   }
+
+
+
+  ngOnDestroy(): void {
+    const filterIndex = this.datepickerService.element.findIndex(data => data === this.el.nativeElement.datepickerFun);
+    this.datepickerService.element.splice(filterIndex, 1);
+    $(this.el.nativeElement).datepicker('destroy');
+  }
+
+
+
+
+
+
+
 
 
 
