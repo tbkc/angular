@@ -3,12 +3,5 @@ import { DatepickerDirective } from './datepicker.directive';
 @Injectable()
 export class DatepickerService {
   element: DatepickerDirective[] = [];
-
-
-
   constructor() { }
-
-
-
-
 }
